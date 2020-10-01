@@ -49,8 +49,7 @@ function sort() {
 
 }
 
-function productNotAvailable() {
-
+function productNotAvailable() {//вывод сообщения об отсутствии товаров
     const div_list = document.querySelectorAll('.product-box__item'); // returns NodeList
     const div_array = [...div_list]; // convert NodeList to Array
     const warningBox = document.querySelector('.warning-box');
@@ -60,7 +59,6 @@ function productNotAvailable() {
     } else {
         warningBox.style.display = 'none';
     }
-
 }
 
 document.querySelector('#select-category').addEventListener('change', sort)
@@ -68,9 +66,11 @@ document.querySelector('#select-price').addEventListener('change', sort)
 document.querySelector('#select-category').addEventListener('change', productNotAvailable)
 document.querySelector('#select-price').addEventListener('change', productNotAvailable)
 
-const buttonOrder = document.querySelector('#btn-order');
-const modal = document.querySelector('#modal-order');
+const buttonOrder = document.querySelector('#btn-order');//кнопка "оформить заказ"
+const modal = document.querySelector('#modal-order');//модальное окно
 const closeModal = document.getElementsByClassName('close')[0];// Get the <span> element that closes the modal
+const buttonSend = document.querySelector('#button-send'); //кнопка "отправить" в модальном окне
+const formOrder = document.querySelector('#form-order');//форма
 
 // When the user clicks the button, open the modal 
 buttonOrder.addEventListener('click', () => {
@@ -89,9 +89,6 @@ window.addEventListener('click', event => {
     }
 })
 
-const buttonSend = document.querySelector('#button-send'); 
-const formOrder = document.querySelector('#form-order');
-
 function validateForm(event) {
     event.preventDefault();
     const inputEmail = document.querySelector('#email');
@@ -108,11 +105,11 @@ function validateForm(event) {
         modal.style.display = "none";
         formOrder.submit();
         alert('Cпасибо за покупку!');
-        clearPrice();
+        clearCart();
     }
 }
 
-function clearPrice () {
+function clearCart () {
     productQuantityCart.innerHTML = productPriceCart.innerHTML = 'XXX';
     cart.price = cart.quantity = 0;
 }
