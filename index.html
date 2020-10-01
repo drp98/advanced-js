@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/modal.css">
 </head>
 <body>
 <div class="app-container pt-40">
@@ -15,7 +16,7 @@
                 <span class="top-cart-info__item">
                      Товаров в корзине - <span id="cart-product-quantity" class="red-info">XXX</span>,
                       на сумму <span  id="cart-product-price" class="red-info">XXX</span> грн</span>
-                <button class="btn-check">Оформить заказ</button>
+                <button id="btn-order" class="btn-check">Оформить заказ</button>
             </div>
         </div><!-- /.top-cart-info -->
 
@@ -245,6 +246,27 @@
         </div>
     </footer>
 </div><!-- /.app-container -->
+
+<div id="modal-order" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close">&times;</span>
+            <h2>Оформление заказа</h2>
+        </div>
+        <div class="modal-body">
+            <form id="form-order">
+                <label for="name">Имя</label>
+                <input type="text" name="name" id="name" placeholder="Введите имя"><br>
+
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" placeholder="Введите email"><br>
+
+                <button class="btn-send" id="button-send">Отправить</button>
+            </form>
+        </div>
+    </div>
+</div>
 
 <script src="./js/index.js"></script>
 

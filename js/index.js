@@ -42,8 +42,7 @@ function sort() {
         
         if((productCategory == selectedCategory || selectedCategory == 'all') && (productPrice <= selectedPrice || selectedPrice == 0)) {
             item.style.display = 'flex'
-        }
-        else {
+        } else {
             item.style.display = 'none'
         }
     })
@@ -68,3 +67,55 @@ document.querySelector('#select-category').addEventListener('change', sort)
 document.querySelector('#select-price').addEventListener('change', sort)
 document.querySelector('#select-category').addEventListener('change', productNotAvailable)
 document.querySelector('#select-price').addEventListener('change', productNotAvailable)
+
+const buttonOrder = document.querySelector('#btn-order');
+const modal = document.querySelector('#modal-order');
+const closeModal = document.getElementsByClassName('close')[0];// Get the <span> element that closes the modal
+
+// When the user clicks the button, open the modal 
+buttonOrder.addEventListener('click', () => {
+    modal.style.display = "block";
+})
+
+// When the user clicks on <span> (x), close the modal
+closeModal.addEventListener('click', () => {
+    modal.style.display = "none";
+})
+
+// When the user clicks anywhere outside of the modal, close it
+window.addEventListener('click', event => {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+})
+
+const buttonSend = document.querySelector('#button-send'); 
+const formOrder = document.querySelector('#form-order');
+
+function validateForm(event) {
+    event.preventDefault();
+    const inputEmail = document.querySelector('#email');
+    const inputName = document.querySelector('#name');
+
+    const regexpEmail = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+
+    if(inputEmail.value == '' || inputName.value == '') {
+        alert('Поля заполнены неверно');
+        console.log('error');
+    } else if(regexpEmail.test(inputEmail.value) == false) {
+        alert('Некорректный email');
+    } else {
+        modal.style.display = "none";
+        formOrder.submit();
+        alert('Cпасибо за покупку!');
+        clearPrice();
+    }
+}
+
+function clearPrice () {
+    productQuantityCart.innerHTML = productPriceCart.innerHTML = 'XXX';
+    cart.price = cart.quantity = 0;
+}
+
+buttonSend.addEventListener('click', validateForm);
+
