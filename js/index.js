@@ -31,3 +31,40 @@ document.querySelectorAll('.product-box__btn').forEach(nodeElement => {//listene
         renderTopCart(cart);
     })
 })
+
+function sort() {
+    const selectedCategory = document.querySelector('#select-category').value;
+    const selectedPrice = getPriceInt(document.querySelector('#select-price').value);
+
+    document.querySelectorAll('.product-box__item').forEach(item => {
+        const productCategory = item.getAttribute('category');
+        const productPrice = getPriceInt(item.querySelector('p').innerHTML);
+        
+        if((productCategory == selectedCategory || selectedCategory == 'all') && (productPrice <= selectedPrice || selectedPrice == 0)) {
+            item.style.display = 'flex'
+        }
+        else {
+            item.style.display = 'none'
+        }
+    })
+
+}
+
+function productNotAvailable() {
+
+    const div_list = document.querySelectorAll('.product-box__item'); // returns NodeList
+    const div_array = [...div_list]; // convert NodeList to Array
+    const warningBox = document.querySelector('.warning-box');
+
+    if(div_array.every(item => item.style.display == 'none')) {
+        warningBox.style.display = 'flex';
+    } else {
+        warningBox.style.display = 'none';
+    }
+
+}
+
+document.querySelector('#select-category').addEventListener('change', sort)
+document.querySelector('#select-price').addEventListener('change', sort)
+document.querySelector('#select-category').addEventListener('change', productNotAvailable)
+document.querySelector('#select-price').addEventListener('change', productNotAvailable)

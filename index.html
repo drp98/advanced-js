@@ -34,16 +34,16 @@
             <div class="filter-box">
                 <div class="select-box">
                     <label class="filter-label">Категория</label>
-                    <select class="select-control">
-                        <option value="0">Все</option>
-                        <option value="1">Завтраки</option>
-                        <option  value="2">Первые блюда</option>
-                        <option  value="3">Гарниры</option>
+                    <select id="select-category" class="select-control">
+                        <option value="all">Все</option>
+                        <option value="breakfast">Завтраки</option>
+                        <option  value="soup">Первые блюда</option>
+                        <option  value="side-dish">Гарниры</option>
                     </select>
                 </div><!-- /.select-box -->
                 <div class="price-select-box">
                     <label class="filter-label">Цена</label>
-                    <select class="select-control">
+                    <select id="select-price" class="select-control">
                         <option value="0">Все</option>
                         <option value="30">До 30 грн</option>
                         <option value="50">До 50 грн</option>
@@ -53,11 +53,13 @@
                 </div><!-- /.price-select-box -->
             </div><!-- /filter-box-->
 
-
+            <div class="warning-box">
+                <p>Товары соответсвующие данным категориям отсутсвуют</p>
+            </div>
 
             <div class="products-box grid-box">
 
-                <div class="product-box__item">
+                <div category="breakfast" class="product-box__item">
                     <h3 class="product-box__title">Овсяная каша с фруктами</h3>
                     <div class="product-box__img">
                         <img class="img-fluid" src="i/im1.jpg">
@@ -71,7 +73,7 @@
 
                     </div>
                 </div>
-                <div class="product-box__item">
+                <div category="breakfast" class="product-box__item">
                     <h3 class="product-box__title">Яичница глазунья с овощами на сковородке</h3>
                     <div class="product-box__img">
                         <img class="img-fluid" src="i/im2.jpg">
@@ -85,7 +87,7 @@
 
                     </div>
                 </div>
-                <div class="product-box__item">
+                <div category="breakfast" class="product-box__item">
                     <h3 class="product-box__title">Сет азербайджанский завтрак</h3>
                     <div class="product-box__img">
                         <img class="img-fluid" src="i/im3.jpg">
@@ -99,7 +101,7 @@
 
                     </div>
                 </div>
-                <div class="product-box__item">
+                <div category="breakfast" class="product-box__item">
                     <h3 class="product-box__title">Яичница с помидорами по-бакински</h3>
                     <div class="product-box__img">
                         <img class="img-fluid" src="i/im4.jpg">
@@ -113,7 +115,7 @@
 
                     </div>
                 </div>
-                <div class="product-box__item">
+                <div category="breakfast" class="product-box__item">
                     <h3 class="product-box__title">Сырники со сметаной</h3>
                     <div class="product-box__img">
                         <img class="img-fluid" src="i/im5.jpg">
@@ -127,7 +129,7 @@
 
                     </div>
                 </div>
-                <div class="product-box__item">
+                <div category="soup" class="product-box__item">
                     <h3 class="product-box__title">Шпинатный крем-суп</h3>
                     <div class="product-box__img">
                         <img class="img-fluid" src="i/im6.jpg">
@@ -141,7 +143,7 @@
 
                     </div>
                 </div>
-                <div class="product-box__item">
+                <div category="soup" class="product-box__item">
                     <h3 class="product-box__title">Суп Пити</h3>
                     <div class="product-box__img">
                         <img class="img-fluid" src="i/im7.jpg">
@@ -155,7 +157,7 @@
 
                     </div>
                 </div>
-                <div class="product-box__item">
+                <div category="soup" class="product-box__item">
                     <h3 class="product-box__title">Борщ украинский</h3>
                     <div class="product-box__img">
                         <img class="img-fluid" src="i/im8.jpg">
@@ -169,7 +171,7 @@
 
                     </div>
                 </div>
-                <div class="product-box__item">
+                <div category="soup" class="product-box__item">
                     <h3 class="product-box__title">Суп Кюфта Бозбаш</h3>
                     <div class="product-box__img">
                         <img class="img-fluid" src="i/im9.jpg">
@@ -183,7 +185,7 @@
 
                     </div>
                 </div>
-                <div class="product-box__item">
+                <div category="side-dish" class="product-box__item">
                     <h3 class="product-box__title">Картофель фри</h3>
                     <div class="product-box__img">
                         <img class="img-fluid" src="i/im10.jpg">
@@ -197,7 +199,7 @@
 
                     </div>
                 </div>
-                <div class="product-box__item">
+                <div category="side-dish" class="product-box__item">
                     <h3 class="product-box__title">Картофель по-домашнему</h3>
                     <div class="product-box__img">
                         <img class="img-fluid" src="i/im11.jpg">
@@ -211,7 +213,7 @@
 
                     </div>
                 </div>
-                <div class="product-box__item">
+                <div category="side-dish" class="product-box__item">
                     <h3 class="product-box__title">Рис с овощами</h3>
                     <div class="product-box__img">
                         <img class="img-fluid" src="i/im12.jpg">
