@@ -83,7 +83,7 @@ nodeListOfQuantityInputs.forEach(nodeElement => {//validation of inputs
     })
 })
 
-nodeListOfProductBoxButtons.forEach(nodeElement => {
+nodeListOfProductBoxButtons.forEach(nodeElement => {//change price and quantity when user clicks 'add' button
     nodeElement.addEventListener('click', () => {
         const currentPrice = nodeElement.parentElement.querySelector('p').innerHTML;
         const currentQuantity = parseInt(nodeElement.parentElement.querySelector('input').value);
