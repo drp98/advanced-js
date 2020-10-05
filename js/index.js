@@ -1,7 +1,4 @@
-const cart = {
-    price: 0,
-    quantity: 0
-}
+const cart = [];
 
 const getPriceInt = price => parseInt(price.match(/\d+/g).toString());//получение стоимости из строки типа "25 грн."
 const regexpEmail = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
@@ -26,6 +23,12 @@ const buttonSend = document.querySelector('#button-send');
 function renderTopCart({price, quantity}) {
     productPriceCart.innerHTML = price;
     productQuantityCart.innerHTML = quantity;
+}
+
+function getSumOfFields(obj, field) {
+    return obj.reduce((accumulator, currentValue) => {
+        return accumulator + currentValue[field];
+    },0)
 }
 
 function sort() {
@@ -71,7 +74,7 @@ function validateForm(event) {
 
 function clearCart () {
     productQuantityCart.innerHTML = productPriceCart.innerHTML = 'XXX';
-    cart.price = cart.quantity = 0;
+    cart.length = 0;
 }
 
 document.addEventListener('change', function(e) {//validation of inputs
@@ -87,13 +90,30 @@ document.addEventListener('click', function(e) {//change price and quantity when
     if(e.target.className == 'product-box__btn') {
         const currentPrice = e.target.parentElement.querySelector('p').innerHTML;
         const currentQuantity = parseInt(e.target.parentElement.querySelector('input').value);
+        const currentProductName = e.target.parentElement.parentElement.querySelector('h3').innerHTML;
 
-        cart.quantity += currentQuantity || 1;
-        cart.price += getPriceInt(currentPrice) * (currentQuantity || 1);
+        if(cart.some(element => element.name == currentProductName) && cart.length) {//если товар уже есть в корзине
+            cart.forEach((element,index) => {
+                if(element.name == currentProductName) {
+                    cart[index].quantity += currentQuantity; 
+                    cart[index].price += getPriceInt(currentPrice) * (currentQuantity || 1); 
+                }
+            })
+        } else {
+            cart.push({
+                name: currentProductName,
+                quantity: currentQuantity || 1,
+                productPrice: getPriceInt(currentPrice),
+                price: getPriceInt(currentPrice) * (currentQuantity || 1)
+            })
+        }
 
-        renderTopCart(cart);
-    } else {
-        return
+        const productItem = {
+            quantity: getSumOfFields(cart,'quantity'),
+            price: getSumOfFields(cart, 'price')
+        }
+        renderTopCart(productItem);
+        console.table(cart);
     }
 });
 
