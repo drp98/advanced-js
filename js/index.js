@@ -15,8 +15,6 @@ const priceSelect = document.querySelector('#select-price');
 const formOrder = document.querySelector('#form-order');
 const warningBox = document.querySelector('.warning-box');
 
-const nodeListOfQuantityInputs = document.querySelectorAll('.qty__item');
-const nodeListOfProductBoxButtons = document.querySelectorAll('.product-box__btn');
 const nodeListOfProductBox = document.querySelectorAll('.product-box__item');
 
 const modal = document.querySelector('#modal-order');
@@ -76,29 +74,32 @@ function clearCart () {
     cart.price = cart.quantity = 0;
 }
 
-nodeListOfQuantityInputs.forEach(nodeElement => {//validation of inputs
-    nodeElement.addEventListener('change', () => {
-        if(nodeElement.value < 1)
-            nodeElement.value = 1
-    })
-})
+document.addEventListener('change', function(e) {//validation of inputs
+    if(e.target.className == 'qty__item') {
+        if(e.target.value < 1)
+            e.target.value = 1
+    } else {
+        return
+    }
+});
 
-nodeListOfProductBoxButtons.forEach(nodeElement => {//change price and quantity when user clicks 'add' button
-    nodeElement.addEventListener('click', () => {
-        const currentPrice = nodeElement.parentElement.querySelector('p').innerHTML;
-        const currentQuantity = parseInt(nodeElement.parentElement.querySelector('input').value);
+document.addEventListener('click', function(e) {//change price and quantity when user clicks 'add' button
+    if(e.target.className == 'product-box__btn') {
+        const currentPrice = e.target.parentElement.querySelector('p').innerHTML;
+        const currentQuantity = parseInt(e.target.parentElement.querySelector('input').value);
 
         cart.quantity += currentQuantity || 1;
         cart.price += getPriceInt(currentPrice) * (currentQuantity || 1);
 
         renderTopCart(cart);
-    })
-})
+    } else {
+        return
+    }
+});
 
 buttonOrder.addEventListener('click', () => {//open the modal 
     modal.style.display = "block";
 })
-
 
 closeModal.addEventListener('click', () => {// clicks on <span> (x), close the modal
     modal.style.display = "none";
