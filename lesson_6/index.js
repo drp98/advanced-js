@@ -1,5 +1,5 @@
 const URL = 'https://jsonplaceholder.typicode.com/';
-const container = document.querySelector('.container');
+const container = document.querySelector('#container');
 
 Promise.all([
     queryApi('posts'),
@@ -16,9 +16,6 @@ function queryApi(endPoint) {
 function render(posts, users) {
     posts.forEach(post => {
         container.innerHTML += convertToHtml(post)
-    })
-
-    posts.forEach(post => {
         users.forEach(user => {
             if(user.id == post.userId) {
                 const innerId = `card-${post.id}`
@@ -51,7 +48,3 @@ function convertUserToHtml({name, username, email}) {
     <p>Username: ${username}</p>
     <p>Email: ${email}</p>`
 }
-
-
-
-
