@@ -1,11 +1,14 @@
 const URL = 'https://jsonplaceholder.typicode.com/';
 const container = document.querySelector('#container');
+const spinner = document.querySelector('#spinner');
 
 Promise.all([
     queryApi('posts'),
     queryApi('users'),
 ]).then(([posts, users]) => {
     render(posts, users)
+}).finally(() => {
+    spinner.remove()
 }).catch(error => container.innerHTML = error)
 
 function queryApi(endPoint) {
