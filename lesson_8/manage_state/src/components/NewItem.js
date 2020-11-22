@@ -1,16 +1,16 @@
 import React, { useState } from 'react'
 import { generate as id } from 'shortid'
 
-const NewItem = (props) => {
+const NewItem = ({ addItem }) => {
     const [value, setValue] = useState('')
-    
+
     const handleChange = event => {
         setValue(event.target.value)
     }
 
     const handleSubmit = event => {
         event.preventDefault()
-        props.addItem({ id: id(), value, packed: false })
+        addItem({ id: id(), value, packed: false })
         setValue('')
     }
 

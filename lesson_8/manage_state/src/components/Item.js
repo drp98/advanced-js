@@ -1,8 +1,7 @@
 import React from 'react'
 import './Item.css'
 
-const Item = props => {
-    const { item } = props
+const Item = ({ item, toggleItem, removeItem }) => {
     return (
         <li className='item-box list-group-item'>
             <div className='form-check'>
@@ -11,7 +10,7 @@ const Item = props => {
                     className='form-check-item'
                     checked={item.packed}
                     id={item.id}
-                    onChange={() => props.toggleItem(item)}
+                    onChange={() => toggleItem(item)}
                 />
                 <label className='form-check-label' htmlFor={item.id}>
                     {item.value}
@@ -19,7 +18,7 @@ const Item = props => {
             </div>
             <button
                 className='btn btn-danger btn-sm'
-                onClick={() => props.removeItem(item.id)}
+                onClick={() => removeItem(item.id)}
             >
                 Remove
             </button>

@@ -1,8 +1,7 @@
 import React from 'react'
 import Item from './Item'
 
-const List = props => {
-    const { items, removeItem, toggleItem, searchTerm } = props
+const List = ({ items, removeItem, toggleItem, searchTerm }) => {
     const regexp = new RegExp(`\\b${searchTerm}`, 'gi')
 
     return (
