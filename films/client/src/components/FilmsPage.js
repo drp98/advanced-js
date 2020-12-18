@@ -85,7 +85,7 @@ class FilmsPage extends Component {
                             <div className='six wide column'>
                                 <FilmForm
                                     submit={this.saveFilm}
-                                    film={find(this.state.films, {_id: props.match.params._id})}
+                                    film={find(this.state.films, {_id: props.match.params._id}) || {}}
                                 />
                             </div>
                         )}

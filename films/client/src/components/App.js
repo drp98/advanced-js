@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Route } from 'react-router-dom'
 import TopNavigation from './TopNavigation'
+import FilmDetails from './films/FilmDetails'
 import { Async, lazyImport } from './Async'
 import { setAuthorizationHeader } from '../utils'
 import jwtDecode from 'jwt-decode'
@@ -62,7 +63,7 @@ const App = () => {
                 path='/films'
                 render={props => <FilmsPage {...props} user={user} />}
             />
-
+            <Route path='/film/:_id' exact component={FilmDetails} />
             <Route
                 path='/signup'
                 render={props => (
