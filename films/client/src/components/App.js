@@ -1,50 +1,80 @@
-import React, { Component } from 'react'
-import FilmsList from './films'
-import { films } from '../data'
-import { orderBy } from 'lodash'
+import React, { useState, useEffect } from 'react'
+import { Route } from 'react-router-dom'
+import TopNavigation from './TopNavigation'
+import { Async, lazyImport } from './Async'
+import { setAuthorizationHeader } from '../utils'
+import jwtDecode from 'jwt-decode'
+
+const HomePage = Async(lazyImport('./HomePage'))
+const FilmsPage = Async(lazyImport('./FilmsPage'))
+const SignupPage = Async(lazyImport('./SignupPage'))
+const LoginPage = Async(lazyImport('./LoginPage'))
 
 const AppContext = React.createContext()
 export { AppContext }
 
-class App extends Component {
-    state = {
-        films: [],
-    }
+const App = () => {
+    const [user, setUser] = useState({ role: 'user', token: '' })
+    const [message, setMessage] = useState('')
+    const isUserAdmin = user.role === 'admin'
 
-    componentDidMount() {
-        this.setState({
-            films: this.sortFilms(films),
+    useEffect(() => {
+        if (localStorage.filmsToken) {
+            setUser({
+                role: jwtDecode(localStorage.filmsToken).user.role,
+                token: localStorage.filmsToken,
+            })
+            setAuthorizationHeader(localStorage.filmsToken)
+        }
+    }, [])
+
+    const login = token => {
+        setUser({
+            role: jwtDecode(token).user.role,
+            token,
         })
+        localStorage.filmsToken = token
+        setAuthorizationHeader(token)
     }
 
-    toggleFeatured = id =>
-        this.setState(({ films }) => ({
-            films: this.sortFilms(
-                films.map(item =>
-                    item._id === id
-                        ? { ...item, featured: !item.featured }
-                        : item,
-                ),
-            ),
-        }))
+    const logout = () => {
+        setUser({ role: 'user', token: '' })
+        setAuthorizationHeader()
+        delete localStorage.filmsToken
+    }
 
-    sortFilms = films => orderBy(films, ['featured', 'title'], ['desc', 'asc'])
-
-    render() {
-        const { films } = this.state
-
-        return (
-            <AppContext.Provider
-                value={{
-                    toggleFeatured: this.toggleFeatured,
-                }}
-            >
-                <div className='ui container mt-3'>
-                    <FilmsList films={films} />
+    return (
+        <div className='ui container'>
+            <TopNavigation
+                logout={logout}
+                isAuth={user.token}
+                isAdmin={isUserAdmin}
+            />
+            {message && (
+                <div className='ui info message'>
+                    <i className='close icon' onClick={() => setMessage('')} />
+                    {message}
                 </div>
-            </AppContext.Provider>
-        )
-    }
+            )}
+
+            <Route exact path='/' component={HomePage} />
+            <Route
+                path='/films'
+                render={props => <FilmsPage {...props} user={user} />}
+            />
+
+            <Route
+                path='/signup'
+                render={props => (
+                    <SignupPage {...props} setMessage={setMessage} />
+                )}
+            />
+            <Route
+                path='/login'
+                render={props => <LoginPage {...props} login={login} />}
+            />
+        </div>
+    )
 }
 
 export default App
