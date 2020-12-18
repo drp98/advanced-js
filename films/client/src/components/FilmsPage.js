@@ -4,7 +4,7 @@ import FilmsList from "./films"
 import {AppContext} from "./App"
 import FilmForm from "./forms/FilmForm"
 import {orderBy, find} from "lodash"
-import { Route } from "react-router-dom"
+import AdminRoute from './AdminRoute'
 
 class FilmsPage extends Component {
     state = {
@@ -69,23 +69,29 @@ class FilmsPage extends Component {
                     user: this.props.user,
                 }}
             >
-                <div className="ui stackable grid">
-                    <Route
+                <div className='ui stackable grid'>
+                    <AdminRoute
                         path='/films/new'
+                        user={this.props.user}
                         render={() => (
                             <div className='six wide column'>
-                                <FilmForm submit={this.saveFilm} film={{}} />
+                                <FilmForm submit={this.props.saveFilm} film={{}} />
                             </div>
                         )}
                     />
 
-                    <Route
+                    <AdminRoute
                         path='/films/edit/:_id'
-                        render={props => (
+                        user={this.props.user}
+                        render={({ match }) => (
                             <div className='six wide column'>
                                 <FilmForm
                                     submit={this.saveFilm}
-                                    film={find(this.state.films, {_id: props.match.params._id}) || {}}
+                                    film={
+                                        find(this.state.films, {
+                                            _id: match.params._id,
+                                        }) || {}
+                                    }
                                 />
                             </div>
                         )}
@@ -93,10 +99,10 @@ class FilmsPage extends Component {
 
                     <div className={`${numCol} wide column`}>
                         {this.state.loading ? (
-                            <div className="ui icon message">
-                                <i className="notched circle loading icon" />
-                                <div className="content">
-                                    <div className="header">films loading</div>
+                            <div className='ui icon message'>
+                                <i className='notched circle loading icon' />
+                                <div className='content'>
+                                    <div className='header'>films loading</div>
                                 </div>
                             </div>
                         ) : (
